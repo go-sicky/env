@@ -1,0 +1,44 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+serversTransport:
+  maxIdleConnsPerHost: 256
+entryPoints:
+  web:
+    address: :80
+  websecure:
+    address: :443
+  metrics:
+    address: :8082
+providers:
+  docker:
+    swarmMode: true
+    exposedByDefault: false
+    network: sicky-net
+    watch: true
+certificatesResolvers:
+  le:
+    acme:
+      email: sicky@sicky.tld
+      storage: /data/acme/acme.json
+      httpChallenge:
+        entryPoint: web
+log:
+  format: json
+  filePath: /data/log/traefik.log
+accessLog:
+  format: json
+  bufferingSize: 5
+metrics:
+  prometheus:
+    entryPoint: metrics
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+# tracing:
+#   zipkin:
+#     httpEndpoint: http://env_zipkin:9411/api/v2/spans
+#   jaeger:
+#     samplingServerURL: http://env_tempo:5778/sampling
+api:
+  dashboard: true
