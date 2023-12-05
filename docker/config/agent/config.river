@@ -6,6 +6,10 @@ logging {
 otelcol.exporter.otlp "tempo" {
   client {
     endpoint = "env_tempo:4317"
+    tls {
+      insecure = true
+      insecure_skip_verify = true
+    }
   }
 }
 
@@ -21,6 +25,24 @@ otelcol.receiver.otlp "default" {
   output {
     metrics = [otelcol.processor.batch.default.input]
     logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.receiver.jaeger "default" {
+  protocols {
+    grpc {}
+    thrift_http {}
+    thrift_compact {}
+  }
+
+  output {
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.receiver.zipkin "default" {
+  output {
     traces  = [otelcol.processor.batch.default.input]
   }
 }

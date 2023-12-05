@@ -36,9 +36,10 @@ metrics:
     addRoutersLabels: true
     addServicesLabels: true
 tracing:
-#   zipkin:
-#     httpEndpoint: http://env_zipkin:9411/api/v2/spans
-   jaeger:
-     samplingServerURL: http://host.docker.internal:4318/sampling
+  zipkin:
+    httpEndpoint: http://host.docker.internal:9411/api/v2/spans
+    #httpEndpoint: http://env_tempo:9411/api/v2/spans
+  #  jaeger:
+  #    localAgentHostPort: host.docker.internal:6831
 api:
   dashboard: true
