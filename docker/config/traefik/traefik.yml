@@ -35,10 +35,9 @@ metrics:
     addRoutersLabels: true
     addServicesLabels: true
 tracing:
-  # zipkin:
-    # httpEndpoint: http://host.docker.internal:9411/api/v2/spans
-    # httpEndpoint: http://env_tempo:9411/api/v2/spans
-  #  jaeger:
-  #    localAgentHostPort: host.docker.internal:6831
+  otlp:
+    grpc:
+      endpoint: host.docker.internal:4317
+      insecure: true
 api:
   dashboard: true
